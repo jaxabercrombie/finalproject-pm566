@@ -1,0 +1,22 @@
+name: "Jaxon's PM-566 Final Project Site"
+output_dir: "."
+navbar:
+  title: "PM-566 Final Project: California Vaccination Efforts by Region/County"
+  left:
+    - text: "Project Homepage"
+      href: index.html
+    - text: "Data Wrangling Code and Process"
+      href: datawrangle.html
+    - text: "Overall Vaccination Data"
+      href: vax.html
+    - text: "Overall Case/Death Data"
+      href: casedeath.html
+    - text: "Vaccinations by Company"
+      href: company.html
+    - text: "Vaccinations by Age"
+      href: age.html
+    - text: "Vaccinations by Race & Ethnicity"
+      href: raceeth.html
+output:
+  html_document:
+    theme: sandstone
