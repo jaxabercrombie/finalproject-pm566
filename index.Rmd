@@ -22,7 +22,7 @@ The overarching, primary question at hand is: *How have COVID-19 vaccination rat
 
 1.  How do trends in cases and deaths potentially affect immunization rates for California as a whole?
 
-2.  How do vaccination efforts vary by vaccine company (Pfizer, Moderna, Johnson & Johnson) and age groups?
+2.  How do vaccination efforts vary by vaccine company (Pfizer, Moderna, Johnson & Johnson)?
 
 $$\\[.1in]$$
 
@@ -51,7 +51,6 @@ library(scales)
 # Read in the CSV files
 vaxCA <- read.csv("CA Vaccine Data.csv")
 covidCA <- read.csv("CA Deaths and Cases.csv")
-demoAgeCA <- read.csv("CA Vaccine Data Demographic Age.csv")
 
 # Merge the first two datasets
 covidCA <-
@@ -83,12 +82,6 @@ mergedCA <-
                      cumulative_deaths,total_tests,
                      cumulative_total_tests,positive_tests,
                      cumulative_positive_tests), mean, .groups = date))
-
-# Make other dataset up until November 30 as well for consistency
-demoAgeCA <- 
-  demoAgeCA %>%
-  mutate(date = as.Date(demoAgeCA$date, "%m/%d/%Y")) %>%
-  filter(date <= as.Date("2021-11-03"))
 
 # Create other variables
 mergedCA <-
@@ -166,7 +159,6 @@ ggplotly(fig2, tooltip = c("x", "y"))
 
 ```{r test, echo = FALSE}
 mergedCA[is.na(mergedCA)] = 0
-demoAgeCA[is.na(demoAgeCA)] = 0
 ```
 Figure 2 illustrates a potential relationship between vaccine uptake and cases and deaths. At first, individuals rushed to be vaccinated for their own safety, but some individuals remained hesitant and lacked motivation to become vaccinated for many months. Though, changes in cases and deaths due to variants made for rises in the number of vaccine doses administered. A rise in cases appeared to motivate greater vaccine uptake after the start of July 2021, likely because of the once novel Delta variant. Compared to the quasi-plateaus of vaccine uptake as seen in Figure 1, there are visible surges between July and October of 2021 for three regions, excluding the Bay Area. This relationship may also have been influenced by policy efforts to require vaccines in public spaces, eligibility for booster shots, and the realization of the effectiveness of vaccination. Nonetheless, it seems natural for people to protect themselves when a threat is imminent, despite prior sentiments against vaccination.
     
@@ -208,28 +200,6 @@ Understanding how vaccination efforts differ by company may influence future rol
 
 $$\\[.1in]$$
 
-### [Fig 4: Vaccination by Age]{.ul}
-
-```{r fig4, echo = FALSE, warnings = FALSE, message=FALSE}
-
-demoAgeCA[is.na(demoAgeCA)] = 0
-
-fig4 <-
-  demoAgeCA %>%
-  filter(demographic_category == "Age Group") %>%
-  ggplot() +
-  geom_line(aes(x = date, y = ave_fully_vax_perc, color = demographic_value)) +
-  scale_color_manual(values = c("#49A1EA", "#3D8ACA", "#3171A6", "#295E8A")) +
-  labs(title = "Fully Vaccinated Individuals by Age Group", x = "Date", 
-         y = "Percent Fully Vaccinated") +
-  theme(legend.title = element_blank(), axis.title.y = element_text(hjust = -1.5)) +
-  facet_wrap(~region)
-
-ggplotly(fig4, tooltip = c("x", "y", "demographic_value"))
-```
-Especially since the health impacts of COVID-19 vary on the basis of age, with the elderly having more adverse effects than youth, seeing where gaps in vaccination efforts lie is crucial. These plots follow similar shapes, since eligibility began with older populations and eventually opened up to the youngest group over the year. Age groups after the 65+ age group appear to have steeper slopes, demonstrating a demand for vaccines and an available supply after majority of the elderly population received their doses. In almost all regions, the 18-49 age group, despite being the largest age range, has the highest percent of fully vaccinated individuals. It appears data is missing for the 12-17 group for Central California, but nevertheless it likely follows the trend of the other three regions. Again, the most vaccinated regions are the Bay Area and Southern California.
-
-$$\\[.1in]$$
 
 ### [Looking Forward]{.ul}
 Traditionally, COVID-19 data is shown aggregated across the U.S. "Three-thousand new cases per day" holds less potential to drive interventions than "only 53% of Black people in the Bay Area are fully vaccinated." This project and the creation of interactive plots encouraged me to investigate a variety of social determinants of health like location, age, and race/ethnicity in depth, which is crucial for my future in championing health equity. Moving forward, I am more informed about how California functions beyond the state-level with COVID-19, and I now can inform peers about inequities found from this project. A future version of this project with information about booster shots will be incredibly exciting, since uptake of booster shots may be vastly different than the initial doses of the COVID-19 vaccine. Now equipped with website and visualization skills, I feel eager to take on a new project!
