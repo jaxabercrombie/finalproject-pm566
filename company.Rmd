@@ -1,7 +1,0 @@
----
-title: "Vaccinations by Company"
-output: 
-    html_document:
-        toc: TRUE
-        toc_float: TRUE
----
