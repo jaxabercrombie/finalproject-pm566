@@ -1,7 +1,0 @@
----
-title: "Vaccinations by Age"
-output: 
-    html_document:
-        toc: TRUE
-        toc_float: TRUE
----
